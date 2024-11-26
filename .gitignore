@@ -1,5 +1,5 @@
 # Dependências do Node.js
-node_modules/electron/dist/electron.exe
+/node_modules/
 
 # Arquivos de log
 npm-debug.log
