@@ -1,5 +1,5 @@
 # Dependências do Node.js
-/node_modules/
+node_modules/
 
 # Arquivos de log
 npm-debug.log
@@ -26,6 +26,3 @@ package-lock.json
 
 # Outros arquivos que podem ser gerados no desenvolvimento
 *.log
-
-# Arquivos binários do Electron
-/node_modules/electron/dist/electron.exe
