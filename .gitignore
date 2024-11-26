@@ -28,4 +28,4 @@ package-lock.json
 *.log
 
 # Arquivos binários do Electron
-node_modules/electron/dist/electron.exe
+/node_modules/electron/dist/electron.exe
