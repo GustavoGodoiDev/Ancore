@@ -2,7 +2,7 @@
 .node_modules/
 
 # Arquivos .exe
-.exe
+*.exe
 
 # Arquivos de log
 npm-debug.log
