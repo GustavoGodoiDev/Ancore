@@ -1,33 +1,33 @@
 # Dependências do Node.js
-node_modules/*
+node_modules/
 
-# Arquivos .exe
+# Arquivos .exe gerados
 *.exe
-
 node_modules/electron/dist/electron.exe
 
 # Arquivos de log
-npm-debug.log
-yarn-debug.log
-yarn-error.log
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Diretórios de builds do Electron
 /dist/
 /build/
+/out/
 
-# Arquivos do sistema operacional (como arquivos temporários)
+# Arquivos do sistema operacional
 .DS_Store
 Thumbs.db
+*.swp
+.nfs*
 
-# Arquivos de ambiente de desenvolvimento (configurações locais)
+# Arquivos de ambiente de desenvolvimento
 .env
 
-# IDEs e editores de código
+# Configurações locais de IDEs e editores
 .vscode/
 .idea/
 
-# Arquivos de pacote gerados pelo npm
-package-lock.json
-
-# Outros arquivos que podem ser gerados no desenvolvimento
-*.log
+# Outros arquivos ou diretórios gerados no desenvolvimento
+*.lock
