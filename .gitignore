@@ -23,8 +23,8 @@ Thumbs.db
 .env
 
 # IDEs e editores de código
-.vscode/*
-.idea/*
+.vscode/
+.idea/
 
 # Arquivos de pacote gerados pelo npm
 package-lock.json
