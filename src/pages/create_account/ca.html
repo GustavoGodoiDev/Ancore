@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancore - Criar Conta</title>
+    <link rel="stylesheet" href="ca.css">
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <h1>Ancore</h1>
+    </header>
+
+    <!-- Cartão de Cadastro -->
+    <div class="card">
+        <h2>Crie sua conta no <span class="destaque">Ancore</span></h2>
+        <p>Cadastre-se para começar a usar nosso software de produtividade.</p>
+
+        <!-- Formulário de Cadastro -->
+        <form id="form-cadastro" class="login-form">
+            <label for="usuario">Usuário:</label>
+            <input type="text" id="usuario" name="usuario" placeholder="Escolha um nome de usuário" required>
+
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" placeholder="Escolha sua senha" required>
+
+            <label for="confirmar-senha">Confirmar Senha:</label>
+            <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Confirme sua senha" required>
+
+            <button id="criar-conta-btn" type="submit">Criar Conta</button>
+        </form>
+
+        <!-- Link para Login -->
+        <button id="login-btn" onclick="window.location.href='index.html'">Já tem uma conta? Faça Login</button>
+
+        <script>
+            const { ipcRenderer } = require('electron');
+
+            document.getElementById('login-btn').addEventListener('click', () => {
+                ipcRenderer.send('navigate-to-home');
+            });
+        </script>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Powered by IT | Developed By Gustavo Godoi</p>
+    </footer>
+    <script src="ca.js"></script>
+</body>
+
+</html>

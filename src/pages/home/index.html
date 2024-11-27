@@ -27,13 +27,21 @@
             <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
 
-            <button type="submit">Entrar</button>
+            <button id="login-btn" type="submit">Entrar</button>
         </form>
 
-        <a href="">Create Account</a>
+        <!-- Botão de Cadastro -->
+        <button id="cadastrar-btn">Criar Conta</button>
+
+        <script>
+            const { ipcRenderer } = require('electron');
+
+            document.getElementById('cadastrar-btn').addEventListener('click', () => {
+                ipcRenderer.send('navigate-to-create-account');
+            });
+        </script>
 
         <!-- Seletor de Cor Terciária -->
-
         <div class="color-picker">
             <label for="color">Escolha o seu tema:</label> 
             <input type="color" id="color" name="color" value="##FF7F00">

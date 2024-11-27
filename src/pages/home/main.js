@@ -1,23 +1,41 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
 
-let win;
+let mainWindow;
 
 function createWindow() {
-    win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true
-        }
+            preload: path.join(__dirname, 'preload.js'), // Se usar preload
+            nodeIntegration: true,
+            contextIsolation: false, // Somente para desenvolvimento
+        },
     });
 
-    win.loadFile('src/pages/home/index.html');
+    // Carrega a página inicial
+    mainWindow.loadFile('src/pages/home/index.html');
 }
+
+// Evento para navegar para a página de criação de conta
+ipcMain.on('navigate-to-create-account', () => {
+    const filePath = path.join(app.getAppPath(), 'src', 'pages', 'create_account', 'ca.html');
+    console.log('Carregando página:', filePath); // Para verificar o caminho correto
+    mainWindow.loadFile(filePath);
+});
+
 
 app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
     }
 });

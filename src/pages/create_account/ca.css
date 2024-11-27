@@ -1,0 +1,295 @@
+/* VARIÁVEIS INICIAIS | COLORIMETRIA ---------------------------------------------------------------------------------------*/
+
+:root {
+    --cor-preto: #141414; /* Preto */
+    --cor-branco: #e4e4e4; /* Branco */
+    --cor-terciaria: #ff8800; /* Cor terciária inicial */
+}
+
+/* CONFIGURAÇÕES GERAIS ---------------------------------------------------------------------------------------------------*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--cor-branco);
+    color: var(--cor-preto);
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centraliza o conteúdo horizontalmente */
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    min-height: 100vh;  /* Garante que o body ocupe a altura total da tela */
+    font-weight: bold;
+    padding-top: 80px; /* Espaço para o cabeçalho fixo */
+}
+
+/* CABEÇALHO ---------------------------------------------------------------------------------------------------------------*/
+
+header {
+    background-color: var(--cor-preto);
+    width: 100%;
+    padding: 10px 5vw; /* Ajuste responsivo do padding */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--cor-terciaria);
+    margin: 0;
+}
+
+/* CARTÃO DE CADASTRO -----------------------------------------------------------------------------------------------------*/
+
+/* CARTÃO DE CADASTRO -----------------------------------------------------------------------------------------------------*/
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5vh 5vw; /* Ajuste proporcional para margens */
+    background-color: var(--cor-preto);
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+    padding: 5vh 5vw;
+    max-width: 800px;
+    width: 90%;
+    min-height: 450px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.card h2 {
+    font-size: 2.4rem;
+    margin-bottom: 2vh;
+    color: var(--cor-branco);
+    font-weight: bold;
+}
+
+.card p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: var(--cor-branco);
+    font-weight: bold;
+    margin-bottom: 4vh;
+}
+
+.destaque {
+    color: var(--cor-terciaria);
+    font-weight: bold;
+}
+
+/* FORMULÁRIO DE CADASTRO ------------------------------------------------------------------------------------------------*/
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-form label {
+    font-size: 1rem;
+    color: var(--cor-branco);
+    margin-bottom: 5px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.login-form input {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--cor-terciaria);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--cor-preto);
+    color: var(--cor-branco);
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos no tamanho total */
+}
+
+/* Remover o efeito de hover nas labels */
+.login-form label {
+    font-size: 1rem;
+    color: var(--cor-branco);
+    margin-bottom: 5px;
+    text-align: left;
+    font-weight: bold;
+    pointer-events: none; /* Garante que as labels não alterem o comportamento de hover dos inputs */
+  }
+
+.login-form input::placeholder {
+    color: var(--cor-terciaria);
+}
+
+/* Alterando a cor do placeholder para preto no hover */
+.login-form input:hover::placeholder {
+    color: var(--cor-preto); 
+}
+
+/* Hover aplicado corretamente ao redor do input, incluindo bordas */
+.login-form input:hover {
+    background-color: var(--cor-terciaria);
+    color: var(--cor-preto);
+    border-color: var(--cor-preto); /* Opcional: muda a cor da borda no hover */
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: var(--cor-terciaria);
+    box-shadow: 0 0 5px var(--cor-terciaria);
+}
+
+/* BOTÕES ---------------------------------------------------------------------------------------------------------------*/
+
+#criar-conta-btn, #login-btn {
+    background-color: var(--cor-branco);
+    color: var(--cor-preto);
+    border: none;
+    padding: 12px 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-width: 100%;
+}
+
+#criar-conta-btn:hover, #login-btn:hover {
+    background-color: var(--cor-terciaria);
+    color: var(--cor-branco);
+    transform: scale(1.05);
+}
+
+/* Ajustando o tamanho do botão "Já tem uma conta?" */
+#login-btn {
+    font-size: 0.9rem; /* Reduzido o tamanho da fonte */
+    padding: 10px 18px;
+}
+
+/* RESPONSIVIDADE --------------------------------------------------------------------------------------------------------*/
+
+@media (max-width: 1024px) {
+    header h1 {
+        font-size: 2.2rem; /* Ajuste de fonte no cabeçalho */
+    }
+
+    .card {
+        padding: 5vh 5vw;
+        width: 90%;
+        min-height: 400px;
+    }
+
+    .card h2 {
+        font-size: 2rem;
+    }
+
+    .card p {
+        font-size: 1rem;
+    }
+
+    #criar-conta-btn, #login-btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .login-form {
+        max-width: 350px;
+    }
+
+    .login-form input {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px; /* Ajuste o topo para telas médias */
+    }
+
+    .card {
+        padding: 5vh 5vw;
+        min-height: 350px;
+        width: 90%;
+    }
+
+    .card h2 {
+        font-size: 1.8rem;
+    }
+
+    .card p {
+        font-size: 1rem;
+    }
+
+    #criar-conta-btn, #login-btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .login-form {
+        max-width: 80%;
+    }
+
+    .login-form input {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 50px; /* Ajuste no topo para telas pequenas */
+    }
+
+    .card {
+        padding: 6vh 6vw;
+        min-height: 300px;
+        width: 90%;
+    }
+
+    .card h2 {
+        font-size: 1.6rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+
+    #criar-conta-btn, #login-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .login-form {
+        max-width: 100%;
+    }
+
+    .login-form input {
+        font-size: 0.8rem;
+    }
+}
+
+/* FOOTER ---------------------------------------------------------------------------------------------------------------*/
+
+footer {
+    background-color: var(--cor-preto);
+    color: var(--cor-terciaria);
+    padding: 10px 5vw;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-weight: bold;
+    box-sizing: border-box;
+}
