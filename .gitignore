@@ -10,8 +10,8 @@ yarn-debug.log
 yarn-error.log
 
 # Diretórios de builds do Electron
-/dist/
-/build/
+/dist/*
+/build/*
 
 # Arquivos do sistema operacional (como arquivos temporários)
 .DS_Store
@@ -21,8 +21,8 @@ Thumbs.db
 .env
 
 # IDEs e editores de código
-.vscode/
-.idea/
+.vscode/*
+.idea/*
 
 # Arquivos de pacote gerados pelo npm
 package-lock.json
