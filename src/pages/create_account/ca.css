@@ -24,11 +24,10 @@ body {
 }
 
 /* CABEÇALHO ---------------------------------------------------------------------------------------------------------------*/
-
 header {
     background-color: var(--cor-preto);
     width: 100%;
-    padding: 10px 5vw; /* Ajuste responsivo do padding */
+    padding: 20px 40px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
@@ -37,16 +36,19 @@ header {
     top: 0;
     left: 0;
     z-index: 1000;
-}
-
-header h1 {
-    font-size: 2.5rem;
+  }
+  
+  header h1 {
+    font-size: 2rem;
     font-weight: bold;
     color: var(--cor-terciaria);
     margin: 0;
-}
-
-/* CARTÃO DE CADASTRO -----------------------------------------------------------------------------------------------------*/
+  }
+  
+  /* Espaçamento inferior do corpo para não cobrir o conteúdo */
+  body {
+    padding-top: 80px;
+  }
 
 /* CARTÃO DE CADASTRO -----------------------------------------------------------------------------------------------------*/
 
@@ -166,6 +168,24 @@ header h1 {
     max-width: 100%;
 }
 
+#voltar-btn {
+    background-color: var(--cor-branco);
+    color: var(--cor-preto);
+    border: none;
+    padding: 12px 20px;
+    margin-top: 20px; /* Adiciona espaçamento maior acima do botão */
+    margin-bottom: 10px; /* Adiciona espaçamento abaixo do botão */
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-width: 100%;
+    display: block; /* Garante que o botão ocupe toda a largura disponível */
+    margin-left: auto; /* Alinha o botão ao centro horizontalmente */
+    margin-right: auto; /* Alinha o botão ao centro horizontalmente */
+}
+
 #criar-conta-btn:hover, #login-btn:hover {
     background-color: var(--cor-terciaria);
     color: var(--cor-branco);
@@ -192,7 +212,7 @@ header h1 {
     }
 
     .card h2 {
-        font-size: 2rem;
+        font-size: 2.8rem;
     }
 
     .card p {

@@ -12,6 +12,7 @@ let db;
 try {
     db = new Database(dbPath); // Conectando ao banco de dados
     console.log(`Banco de dados conectado em: ${dbPath}`);
+    console.log('Aplicacao iniciada.');
 } catch (err) {
     console.error('Erro ao conectar ao banco de dados:', err);
     app.quit(); // Encerra o aplicativo caso o banco não possa ser conectado
@@ -88,7 +89,8 @@ app.whenReady().then(createWindow);
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         db.close();
-        console.log('Conexão com o banco de dados encerrada.');
+        console.log('Conexao com o banco de dados encerrada.');
+        console.log('Aplicacao encerrada.');
         app.quit();
     }
 });

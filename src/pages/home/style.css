@@ -113,14 +113,14 @@ body {
   font-size: 2.8rem;
   margin-bottom: 5px;
   color: var(--cor-terciaria);
-  font-weight: small-caps;
+  font-weight: bold;
 }
 
 .card p {
   font-size: 1.2rem;
   line-height: 1.5;
   color: var(--cor-branco);
-  font-weight: 
+  font-weight;
 }
 
 /* Formulário de Login */

@@ -1,5 +1,6 @@
-const { remote } = require('electron'); // Importa o remote para acessar o backend do Electron
-const db = require('./path-to-your/database'); // Importa o banco de dados SQLite
+// ca.js
+const { checkUserExists, insertUser, insertSettings, getUserId } = require('./database'); // Ajuste o caminho conforme necessário
+const bcrypt = require('bcryptjs');
 
 document.addEventListener("DOMContentLoaded", () => {
     // Referência ao formulário de cadastro
@@ -27,14 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Verifica se o usuário já existe no banco
-        const userExists = db.prepare('SELECT * FROM users WHERE username = ?').get(usuario);
+        const userExists = checkUserExists(usuario);
         if (userExists) {
             alert("Usuário já existe.");
             return;
         }
 
-        // Criptografar a senha (opcional mas recomendado)
-        const bcrypt = require('bcryptjs');
+        // Criptografar a senha
         bcrypt.hash(senha, 10, (err, hashedPassword) => {
             if (err) {
                 alert("Erro ao criptografar a senha.");
@@ -42,13 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Inserir o novo usuário no banco de dados
-            const insertUser = db.prepare('INSERT INTO users (username, password) VALUES (?, ?)');
-            insertUser.run(usuario, hashedPassword);
+            insertUser(usuario, hashedPassword);
 
             // Inserir configurações iniciais para o novo usuário
-            const insertSettings = db.prepare('INSERT INTO settings (user_id, theme, background) VALUES (?, ?, ?)');
-            const userId = db.prepare('SELECT id FROM users WHERE username = ?').get(usuario).id;
-            insertSettings.run(userId, 'light', 'default');
+            const userId = getUserId(usuario);  // Agora buscando o ID do usuário
+            insertSettings(userId, 'light', 'default'); // Configuração padrão
 
             alert("Conta criada com sucesso!");
             formCadastro.reset();
