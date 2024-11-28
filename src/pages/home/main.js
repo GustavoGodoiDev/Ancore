@@ -6,9 +6,18 @@ const Database = require('better-sqlite3'); // Usando o banco de dados SQLite
 let mainWindow;
 
 // Caminho do banco de dados
-const dbPath = path.join(__dirname, 'data', 'ancore.db');
-const db = new Database(dbPath); // Conectando ao banco de dados
+const dbPath = path.join(app.getAppPath(), 'data', 'ancore.db');
+let db;
 
+try {
+    db = new Database(dbPath); // Conectando ao banco de dados
+    console.log(`Banco de dados conectado em: ${dbPath}`);
+} catch (err) {
+    console.error('Erro ao conectar ao banco de dados:', err);
+    app.quit(); // Encerra o aplicativo caso o banco não possa ser conectado
+}
+
+// Função para criar a janela principal
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
@@ -20,8 +29,8 @@ function createWindow() {
         },
     });
 
-    // Carrega a página inicial
-    mainWindow.loadFile('src/pages/home/index.html');
+    // Carrega a página inicial com caminho absoluto
+    mainWindow.loadFile(path.join(app.getAppPath(), 'src', 'pages', 'home', 'index.html'));
 }
 
 // Evento para navegar para a página de criação de conta
@@ -33,45 +42,53 @@ ipcMain.on('navigate-to-create-account', () => {
 
 // Evento para validar login
 ipcMain.on('login', (event, { username, password }) => {
-    const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username); // Consulta ao banco
+    try {
+        const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username); // Consulta ao banco
 
-    if (!user) {
-        // Usuário não encontrado
-        new Notification({
-            title: 'Erro no Login',
-            body: 'Usuário não encontrado. Deseja criar uma conta?',
-        }).show();
-        event.reply('login-response', { success: false, message: 'Usuário não encontrado' });
-        return;
-    }
-
-    // Verificar se a senha está correta usando bcryptjs
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) {
-            console.error('Erro ao comparar senhas:', err);
-            event.reply('login-response', { success: false, message: 'Erro interno. Tente novamente mais tarde.' });
+        if (!user) {
+            // Usuário não encontrado
+            new Notification({
+                title: 'Erro no Login',
+                body: 'Usuário não encontrado. Deseja criar uma conta?',
+            }).show();
+            event.reply('login-response', { success: false, message: 'Usuário não encontrado' });
             return;
         }
 
-        if (isMatch) {
-            // Senha correta
-            event.reply('login-response', { success: true, message: 'Login bem-sucedido!' });
-            // Aqui você pode realizar a navegação ou outras ações após o login bem-sucedido
-        } else {
-            // Senha incorreta
-            new Notification({
-                title: 'Erro no Login',
-                body: 'Senha incorreta. Tente novamente.',
-            }).show();
-            event.reply('login-response', { success: false, message: 'Senha incorreta' });
-        }
-    });
+        // Verificar se a senha está correta usando bcryptjs
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+            if (err) {
+                console.error('Erro ao comparar senhas:', err);
+                event.reply('login-response', { success: false, message: 'Erro interno. Tente novamente mais tarde.' });
+                return;
+            }
+
+            if (isMatch) {
+                // Senha correta
+                event.reply('login-response', { success: true, message: 'Login bem-sucedido!' });
+                // Aqui você pode realizar a navegação ou outras ações após o login bem-sucedido
+            } else {
+                // Senha incorreta
+                new Notification({
+                    title: 'Erro no Login',
+                    body: 'Senha incorreta. Tente novamente.',
+                }).show();
+                event.reply('login-response', { success: false, message: 'Senha incorreta' });
+            }
+        });
+    } catch (error) {
+        console.error('Erro ao processar login:', error);
+        event.reply('login-response', { success: false, message: 'Erro interno. Tente novamente mais tarde.' });
+    }
 });
 
 app.whenReady().then(createWindow);
 
+// Fechando o banco de dados ao sair
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
+        db.close();
+        console.log('Conexão com o banco de dados encerrada.');
         app.quit();
     }
 });
