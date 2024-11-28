@@ -19,7 +19,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/GustavoGodoiDev/AncoreSoftware.git"
+        "url": "git+https://github.com/GustavoGodoiDev/AncoreSoftware.git"
     },
     "keywords": [
         "electron",
@@ -28,6 +28,11 @@
     ],
     "homepage": "https://github.com/GustavoGodoiDev/AncoreSoftware",
     "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "better-sqlite3": "^11.6.0",
         "electron": "^33.2.0"
+    },
+    "bugs": {
+        "url": "https://github.com/GustavoGodoiDev/AncoreSoftware/issues"
     }
 }

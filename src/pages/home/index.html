@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +19,7 @@
         <p>Seu software de produtividade.</p>
 
         <!-- Formulário de Login -->
-        <form class="login-form" action="#" method="POST">
+        <form id="login-form" class="login-form" action="#" method="POST">
             <label for="usuario">Usuário:</label>
             <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário" required>
 
@@ -36,8 +35,32 @@
         <script>
             const { ipcRenderer } = require('electron');
 
+            // Navegar para a página de cadastro
             document.getElementById('cadastrar-btn').addEventListener('click', () => {
                 ipcRenderer.send('navigate-to-create-account');
+            });
+
+            // Enviar dados de login ao processo principal
+            document.getElementById('login-form').addEventListener('submit', (event) => {
+                event.preventDefault(); // Previne o envio padrão do formulário
+
+                // Coleta as informações do formulário
+                const usuario = document.getElementById('usuario').value;
+                const senha = document.getElementById('senha').value;
+
+                // Envia as credenciais para o processo principal via ipcRenderer
+                ipcRenderer.send('login', { username: usuario, password: senha });
+            });
+
+            // Recebe a resposta de login e exibe um alerta
+            ipcRenderer.on('login-response', (event, response) => {
+                if (response.success) {
+                    alert(response.message); // Login bem-sucedido
+                    // Redireciona para a página principal ou outra ação desejada
+                    window.location.href = 'src/pages/home/index.html'; // Exemplo de navegação
+                } else {
+                    alert(response.message); // Erro de login
+                }
             });
         </script>
 
@@ -63,5 +86,4 @@
     </footer> 
 
 </body>
-
 </html>
