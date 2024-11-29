@@ -1,102 +1,51 @@
 const { app, BrowserWindow, ipcMain, Notification } = require('electron');
 const path = require('path');
-const bcrypt = require('bcryptjs'); // Importando o bcryptjs
-const Database = require('better-sqlite3'); // Usando o banco de dados SQLite
+const { createUsersTable, registerUser, verifyUserCredentials } = require('./database');
+const url = require('url');
 
-let mainWindow;
-
-// Caminho do banco de dados
-const dbPath = path.join(app.getAppPath(), 'data', 'ancore.db');
-let db;
-
-try {
-    db = new Database(dbPath); // Conectando ao banco de dados
-    console.log(`Banco de dados conectado em: ${dbPath}`);
-    console.log('Aplicacao iniciada.');
-} catch (err) {
-    console.error('Erro ao conectar ao banco de dados:', err);
-    app.quit(); // Encerra o aplicativo caso o banco não possa ser conectado
-}
-
-// Função para criar a janela principal
-function createWindow() {
-    mainWindow = new BrowserWindow({
+// Função para criar a janela principal do Electron
+function createMainWindow() {
+    const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'), // Se usar preload
             nodeIntegration: true,
-            contextIsolation: false, // Somente para desenvolvimento
-        },
+            contextIsolation: false,
+            preload: path.join(__dirname, 'preload.js')
+        }
     });
 
-    // Carrega a página inicial com caminho absoluto
-    mainWindow.loadFile(path.join(app.getAppPath(), 'src', 'pages', 'home', 'index.html'));
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'src', 'pages', 'home', 'index.html'),
+        protocol: 'file:',
+        slashes: true
+    }));
+
+    mainWindow.on('closed', () => {
+        app.quit();
+    });
 }
 
-// Evento para navegar para a página de criação de conta
-ipcMain.on('navigate-to-create-account', () => {
-    const filePath = path.join(app.getAppPath(), 'src', 'pages', 'create_account', 'ca.html');
-    console.log('Carregando página:', filePath); // Para verificar o caminho correto
-    mainWindow.loadFile(filePath);
+// Inicialização do Electron
+app.whenReady().then(async () => {
+    // Cria a tabela de usuários no banco de dados
+    await createUsersTable();
+    createMainWindow();
 });
 
-// Evento para validar login
-ipcMain.on('login', (event, { username, password }) => {
-    try {
-        const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username); // Consulta ao banco
-
-        if (!user) {
-            // Usuário não encontrado
-            new Notification({
-                title: 'Erro no Login',
-                body: 'Usuário não encontrado. Deseja criar uma conta?',
-            }).show();
-            event.reply('login-response', { success: false, message: 'Usuário não encontrado' });
-            return;
-        }
-
-        // Verificar se a senha está correta usando bcryptjs
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) {
-                console.error('Erro ao comparar senhas:', err);
-                event.reply('login-response', { success: false, message: 'Erro interno. Tente novamente mais tarde.' });
-                return;
-            }
-
-            if (isMatch) {
-                // Senha correta
-                event.reply('login-response', { success: true, message: 'Login bem-sucedido!' });
-                // Aqui você pode realizar a navegação ou outras ações após o login bem-sucedido
-            } else {
-                // Senha incorreta
-                new Notification({
-                    title: 'Erro no Login',
-                    body: 'Senha incorreta. Tente novamente.',
-                }).show();
-                event.reply('login-response', { success: false, message: 'Senha incorreta' });
-            }
-        });
-    } catch (error) {
-        console.error('Erro ao processar login:', error);
-        event.reply('login-response', { success: false, message: 'Erro interno. Tente novamente mais tarde.' });
-    }
-});
-
-app.whenReady().then(createWindow);
-
-// Fechando o banco de dados ao sair
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        db.close();
-        console.log('Conexao com o banco de dados encerrada.');
-        console.log('Aplicacao encerrada.');
         app.quit();
     }
 });
 
-app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow();
-    }
+// Comunicação entre renderizador (frontend) e processo principal (backend)
+ipcMain.on('login', async (event, { username, password }) => {
+    const response = await verifyUserCredentials({ username, password });
+    event.reply('login-response', response);
+});
+
+ipcMain.on('create-account', async (event, { username, name, password }) => {
+    await registerUser({ username, name, password });
+    event.reply('account-created', { success: true, message: 'Conta criada com sucesso!' });
 });
