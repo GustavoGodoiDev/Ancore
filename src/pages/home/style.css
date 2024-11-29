@@ -120,7 +120,7 @@ body {
   font-size: 1.2rem;
   line-height: 1.5;
   color: var(--cor-branco);
-  font-weight;
+  font-weight:bold;
 }
 
 /* Formulário de Login */
