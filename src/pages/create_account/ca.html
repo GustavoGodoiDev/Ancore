@@ -39,14 +39,6 @@
         <!-- Link para Login -->
         <button id="voltar-btn" onclick="window.location.href='../home/index.html'">Já tem uma conta? Faça Login</button> <!-- Caminho relativo para index.html na pasta home -->
 
-        <script>
-            const { ipcRenderer } = require('electron');
-
-            document.getElementById('login-btn').addEventListener('click', () => {
-                ipcRenderer.send('navigate-to-home');
-            });
-        </script>
-
     </div>
 
     <!-- Footer -->

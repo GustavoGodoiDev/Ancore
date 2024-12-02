@@ -186,7 +186,7 @@ header {
     margin-right: auto; /* Alinha o botão ao centro horizontalmente */
 }
 
-#criar-conta-btn:hover, #login-btn:hover {
+#criar-conta-btn:hover, #login-btn:hover, #voltar-btn:hover {
     background-color: var(--cor-terciaria);
     color: var(--cor-branco);
     transform: scale(1.05);

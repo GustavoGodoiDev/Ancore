@@ -1,39 +1,11 @@
 {
-    "name": "ancore-software",
-    "version": "1.0.0",
-    "description": "A productivity-focused desktop application built with Electron.",
-    "main": "src/pages/home/main.js",
-    "scripts": {
-        "start": "electron .",
-        "dev": "electron .",
-        "build": "electron-builder"
-    },
-    "author": "Seu Nome",
-    "license": "MIT",
-    "devDependencies": {
-        "electron-builder": "^24.0.0",
-        "electron-rebuild": "^3.2.9",
-        "electron-reload": "^1.4.0"
-    },
-    "engines": {
-        "node": ">=16.0.0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/GustavoGodoiDev/AncoreSoftware.git"
-    },
-    "keywords": [
-        "electron",
-        "productivity",
-        "desktop app"
-    ],
-    "homepage": "https://github.com/GustavoGodoiDev/AncoreSoftware",
-    "dependencies": {
-        "bcryptjs": "^2.4.3",
-        "better-sqlite3": "^11.6.0",
-        "electron": "^33.2.1"
-    },
-    "bugs": {
-        "url": "https://github.com/GustavoGodoiDev/AncoreSoftware/issues"
-    }
+  "name": "ancore",
+  "version": "1.0.0",
+  "main": "scripts/main.js", 
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^33.2.1"
+  }
 }
